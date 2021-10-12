@@ -8,7 +8,10 @@
     Karyawan
 @endsection
 
+
+
 @section('content')
+    @include('sweetalert::alert')
 
         <div class="row">
             <div class="col-md-12">
@@ -85,15 +88,40 @@
                                 </div>
                                 @endif
 
-                                {{-- jika error data excel --}}
+                                {{-- notifikasi jika error data excel --}}
                                 @if (isset($errors) && $errors->any())
                                     @foreach ($errors->all() as $error)
-                                    <div class="alert alert-danger mt-4">
+                                    <div class="alert alert-danger mt-4" style="color:red;">
                                         <button type="button" class="close" data-dismiss="alert">×</button>
                                         {{ $error }}
-                                    </div>  
+                                    </div>
                                     @endforeach
                                 @endif
+
+                                {{-- memunculkan notfikasi kesalahan setiap baris --}}
+                                @if (session()->has('failures'))
+                                    <div class="alert alert-danger mt-4" style="color:red;">
+                                        <div class="row" style="border-bottom:solid 1px red">
+                                            <div class="col-3"><strong>Baris</strong></div>
+                                            <div class="col-3"><strong>Bagian</strong></div>
+                                            <div class="col-3"><strong>Alasan</strong></div>
+                                            <div class="col-3"><strong>Data</strong></div>
+                                        </div>
+                                        @foreach (session()->get('failures') as $validation)
+                                        <div class="row">
+                                            <div class="col-3">{{ $validation->row() }}</div>
+                                            <div class="col-3">{{ $validation->attribute() }}</div>
+                                            <div class="col-3">
+                                                @foreach ($validation->errors() as $e)
+                                                    <li>{{ $e }}</li>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-3">{{ $validation->values()[$validation->attribute()] }}</div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -123,8 +151,20 @@
                                         <td>{{ $karyawan->telp }}</td>
                                         <td>{{ $karyawan->divisi }}</td>
                                         <td>{{ $karyawan->bagian }}</td>
-                                        <td>Edit | Hapus</td>
-                                    </tr>    
+                                        <td>
+                                            <form action="{{ route('karyawan.hapus', $karyawan->id) }}" method="post">
+
+                                            <a href="" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-tasks"></i> Edit
+                                            </a>
+                                            {{-- hapus data --}}
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" onClick="return confirm('Anda yakin ?')">
+                                                    <i class="fa fa-trash"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>

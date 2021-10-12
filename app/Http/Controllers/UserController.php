@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -24,7 +25,17 @@ class UserController extends Controller
         $user = Auth::user();
         $data_karyawan = User::All();
         $judul = 'karyawan';
+
         return view('admin.karyawan', compact('judul','data_karyawan'));
+    }
+
+    // hapus
+    public function delete($id){
+        $user = User::find($id);
+        $user -> delete();
+
+        toast('Data Berhasil Dihapus','warning');
+        return redirect('/karyawan');
     }
 
     // import excel
@@ -45,9 +56,15 @@ class UserController extends Controller
         $file->move('file_user', $nama_file);
 
         // imoport data excelnya
-        Excel::import(new UserImport, public_path('/file_user/'.$nama_file));
+        $import = new UserImport;
+        $import->import(public_path('/file_user/'.$nama_file));
+        // Excel::import(new UserImport, public_path('/file_user/'.$nama_file));
 
-        // Session::flash('sukses','Data Siswa Berhasil Diimport!');
+        // Validasi vaiure
+        // dd($import->failures());
+        if($import->failures()->isNotEmpty()){
+            return back()->withFailures($import->failures());
+        }
 
         // kembalikan
         return redirect('/karyawan')->with('sukses','Selamat! Data karyawan berhasil diimport');

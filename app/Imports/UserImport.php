@@ -10,10 +10,18 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Validators\Failure;
 
-class UserImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidation
+class UserImport implements
+    ToModel,
+    WithHeadingRow,
+    SkipsOnError,
+    WithValidation,
+    SkipsOnFailure
 {
-    use Importable, SkipsErrors;
+    use Importable, SkipsErrors, SkipsFailures;
     /**
     * @param array $row
     *
@@ -36,9 +44,15 @@ class UserImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidatio
 
     }
 
+    // Validasi isi (Akan berhenti saat value)
     public function rules():array{
         return[
             '*.email'       => ['email', 'unique:users,email']
         ];
     }
+
+    // menghindari berhenti saat salah
+    // public function onFailure(Failure ...$failures){
+
+    // }
 }

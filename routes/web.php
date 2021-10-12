@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
+    toast('Success Toast','success');
     return view('welcome');
 });
 
@@ -30,7 +32,8 @@ Route::middleware(['admin'])->group(function(){
     Route::get('/dynamictables',[HomeController::class, 'dynamictables']);
 
     // user
-    Route::get('/karyawan',     [UserController::class, 'index']);
+    Route::get('/karyawan',         [UserController::class, 'index']);
+    Route::post('/karyawan/hapus/{id}',  [UserController::class, 'delete'])->name('karyawan.hapus');
 
     // import excel
     Route::post('karyawan/import_excel', [UserController::class, 'import_excel']);
