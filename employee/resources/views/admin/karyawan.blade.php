@@ -176,7 +176,7 @@
                                                                 <label for="smallInput">Nama Karyawan</label>
                                                                 <input type="text" name="nama" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->name }}">
                                                             </div>
-                                                            <div class="form-group">
+                                                            <div class="form-group"> 
                                                                 <label for="smallInput">Email</label>
                                                                 <input type="text" name="email" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->email }}">
                                                             </div>
