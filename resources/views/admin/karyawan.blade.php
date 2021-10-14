@@ -117,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <button class="btn btn-warning btn-sm  pull-right"><i class="fa fa-download"></i>  Download Format</button>
+                                <a class="btn btn-warning btn-sm  pull-right" href="user/export"><i class="fa fa-download"></i>  Download Format</a>
                             </div>
                         </div>
                         <div class="row">

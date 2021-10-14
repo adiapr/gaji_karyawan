@@ -13,11 +13,11 @@ use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Validators\Failure;
 
-class GajiImport implements 
+class GajiImport implements
                     ToModel,
                     WithHeadingRow,
                     SkipsOnError,
-                    WithValidation,
+                    // WithValidation,
                     SkipsOnFailure
 {
     use Importable, SkipsErrors, SkipsFailures;
@@ -28,6 +28,7 @@ class GajiImport implements
     */
     public function model(array $row)
     {
+        $total_gaji=  $row['gp'] + $row['bonus'] + $row['tunjangan'] + $row['penyesuaian'] + $row['tgl_merah'] + $row['produktivitas'] - $row['pot_hadir'] - $row['pot_telat'];
         return new Gaji([
             //
             'nama_karyawan'     =>$row['nama'],
@@ -42,7 +43,7 @@ class GajiImport implements
             'penyesuaian'       =>$row['penyesuaian'],
             'tgl_merah'         =>$row['tgl_merah'],
             'produktivitas'     =>$row['produktivitas'],
-            'total_gaji'        =>$row['total_gaji']
+            'total_gaji'        =>$total_gaji
         ]);
     }
 
@@ -58,8 +59,8 @@ class GajiImport implements
     }
 
     // menghindari berhenti saat salah
-    public function onFailure(Failure ...$failures){
+    // public function onFailure(Failure ...$failures){
 
-    }
+    // }
 
 }

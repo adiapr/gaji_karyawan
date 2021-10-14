@@ -183,9 +183,16 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>Telp</th>
-                                        <th>Divisi</th>
-                                        <th>Bagian</th>
+                                        <th>Periode</th>
+                                        <th>Gaji Pokok</th>
+                                        <th>Tunjangan</th>
+                                        <th>Bonus</th>
+                                        <th>Potongan Hadir</th>
+                                        <th>Potongan Telat</th>
+                                        <th>Penyesuaian</th>
+                                        <th>Tanggal Merah</th>
+                                        <th>Produktivitas</th>
+                                        <th>Total Gaji</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
@@ -196,24 +203,31 @@
                                     @foreach ($gaji as $gajii)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $gajii->nama_karyawan }}</td>
+                                        <td>{{ $gajii->email }}</td>
+                                        <td>{{ $gajii->tanggal }}</td>
+                                        <td>{{ number_format($gajii->gp,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->tunjangan,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->bonus,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->pot_hadir,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->pot_telat,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->penyesuaian,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->tgl_merah,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->produktivitas,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->total_gaji,0,',','.') }}</td>
                                         <td>
-                                            {{-- <form action="{{ route('karyawan.hapus', $karyawan->id) }}" method="post"> --}}
+                                            <form action="{{ route('gaji.hapus', $gajii->id) }}" method="post">
                                             <div style="width:150px">
                                                 <a href="" data-toggle="modal"  data-target="#edit" class="btn btn-primary btn-sm">
                                                     <i class="fa fa-tasks"></i> Edit
                                                 </a>
                                                 {{-- hapus data --}}
-                                                    {{-- @csrf --}}
+                                                    @csrf
                                                     <button class="btn btn-danger btn-sm" onClick="return confirm('Anda yakin ?')">
                                                         <i class="fa fa-trash"></i> Hapus
                                                     </button>
                                             </div>
-                                            {{-- </form> --}}
+                                            </form>
                                             <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                 <div class="modal-content">

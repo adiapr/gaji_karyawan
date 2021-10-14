@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserExport;
 use Illuminate\Contracts\Session\Session;
 
 // use Session;
@@ -14,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class UserController extends Controller 
+class UserController extends Controller
 {
     public function __construct()
     {
@@ -103,6 +104,11 @@ class UserController extends Controller
 
         // kembalikan
         return redirect('/karyawan')->with('sukses','Selamat! Data karyawan berhasil diimport');
+    }
+
+    // export excel
+    public function export(){
+        return Excel::download(new UserExport, 'users.xlsx');
     }
 
 

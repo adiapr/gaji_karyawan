@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Validators\Failure;
 
-class UserImport implements 
+class UserImport implements
     ToModel,
     WithHeadingRow,
     SkipsOnError,
@@ -52,7 +52,7 @@ class UserImport implements
     }
 
     // menghindari berhenti saat salah
-    public function onFailure(Failure ...$failures){
+    // public function onFailure(Failure ...$failure){
 
-    }
+    // }
 }

@@ -18,7 +18,16 @@ class GajiController extends Controller
     // index
     public function index(){
         $gaji = Gaji::All();
-        return view('admin.rekap-gaji', compact('gaji')); 
+        return view('admin.rekap-gaji', compact('gaji'));
+    }
+
+    // hapus
+    public function delete($id){
+        $gaji = Gaji::find($id);
+        $gaji -> delete();
+
+        toast('Data Berhasil Dihapus','warning');
+        return redirect('/admin/kelola-gaji');
     }
 
     // import excel

@@ -39,11 +39,15 @@ Route::middleware(['admin'])->group(function(){
     Route::post('/karyawan/add',            [UserController::class, 'add'])->name('karyawan.add');
 
     // rekap-gaji
-    Route::get('/admin/kelola-gaji',        [GajiController::class, 'index']);        
+    Route::get('/admin/kelola-gaji',        [GajiController::class, 'index']);
+    Route::post('/gaji/hapus/{id}',         [GajiController::class, 'delete'])->name('gaji.hapus');
 
     // import excel
     Route::post('karyawan/import_excel',    [UserController::class, 'import_excel']);
     Route::post('gaji/import_excel',        [GajiController::class, 'import_excel']);
+
+    // export excel
+    Route::get('/user/export',              [UserController::class, 'export']);
 
 
     // mengelompokan admin
