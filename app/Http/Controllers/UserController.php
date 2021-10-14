@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -19,14 +20,34 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    //
+
+    //index
     public function index()
     {
         $user = Auth::user();
-        $data_karyawan = User::All();
+        $data_karyawan = User::orderBy('id','desc')
+                            ->get();
         $judul = 'karyawan';
 
         return view('admin.karyawan', compact('judul','data_karyawan'));
+    }
+
+    // add
+    public function add(Request $request){
+        $karyawan = new User;
+
+        $karyawan->name         = $request->nama;
+        $karyawan->email        = $request->email;
+        $karyawan->password     = Hash::make($request->password);
+        $karyawan->telp         = $request->telp;
+        $karyawan->divisi       = $request->divisi;
+        $karyawan->bagian       = $request->bagian;
+        $karyawan->role         = 'karyawan';
+
+        $karyawan->save();
+
+        toast('Data berhasil ditambahkan','success');
+        return redirect('/karyawan');
     }
 
     // hapus
@@ -36,6 +57,20 @@ class UserController extends Controller
 
         toast('Data Berhasil Dihapus','warning');
         return redirect('/karyawan');
+    }
+
+    // update
+    public function perbaharui(Request $request, $id){
+        $user = User::find($id);
+        $user->name         = $request->nama;
+        $user->email        = $request->email;
+        $user->telp         = $request->telp;
+        $user->divisi       = $request->divisi;
+        $user->bagian       = $request->bagian;
+
+        $user->update();
+        toast('Data Berhasil Diperbarui','success');
+        return redirect('/karyawan')->with('sukses','Selamat! Data karyawan berhasil diperbarui');
     }
 
     // import excel

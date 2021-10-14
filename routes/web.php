@@ -32,8 +32,10 @@ Route::middleware(['admin'])->group(function(){
     Route::get('/dynamictables',[HomeController::class, 'dynamictables']);
 
     // user
-    Route::get('/karyawan',         [UserController::class, 'index']);
-    Route::post('/karyawan/hapus/{id}',  [UserController::class, 'delete'])->name('karyawan.hapus');
+    Route::get('/karyawan',                 [UserController::class, 'index']);
+    Route::post('/karyawan/hapus/{id}',     [UserController::class, 'delete'])->name('karyawan.hapus');
+    Route::post('/karyawan/update/{id}',    [UserController::class, 'perbaharui'])->name('karyawan.update');
+    Route::post('/karyawan/add',            [UserController::class, 'add'])->name('karyawan.add');
 
     // import excel
     Route::post('karyawan/import_excel', [UserController::class, 'import_excel']);

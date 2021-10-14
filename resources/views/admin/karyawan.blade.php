@@ -21,27 +21,76 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <button class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#modalTambah"><i class="fa fa-plus-circle"></i>  Tambah Data</button>
-                                <!-- Modal -->
+                                <!-- Modal Input karyawan -->
                                 <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-lg">
+
                                     <div class="modal-content">
+                                        <form action="{{ route('karyawan.add') }}" method="post">
+                                            {{ csrf_field() }}
                                         <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Data</b></h5>
                                         </div>
                                         <div class="modal-body">
-                                        ...
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Nama</label>
+                                                        <input type="text" required name="nama" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan data karyawan">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Email</label>
+                                                        <input type="text" required name="email" class="form-control form-control-sm" id="smallInput" placeholder="ex. nama@mangrovecorp.id">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Password</label>
+                                                        <input type="text" required name="password" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan password">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Telp</label>
+                                                        <input type="number" required name="telp" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan telephone/whatsapp">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Divisi</label>
+                                                        <select name="divisi" required class="form-control form-control-sm" id="smallInput">
+                                                            <option value="">-- Pilih Divisi --</option>
+                                                            <option value="Makenliving">MakenLiving</option>
+                                                            <option value="Jagoancoding">Jagoancoding</option>
+                                                            <option value="Kaos Mangrove">Kaos Mangrove</option>
+                                                            <option value="Mangrove Inspiration">Mangrove Inspiration</option>
+                                                            <option value="Mangrove Gejayan">Mangrove Gejayan</option>
+                                                        </select>
+                                                        {{-- <input type="text" name="nama" class="form-control form-control-sm" id="smallInput"> --}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Bagian</label>
+                                                        <input type="text" required name="bagian" class="form-control form-control-sm" id="smallInput">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
                                         </div>
+                                        </form>
                                     </div>
+
                                     </div>
                                 </div>
 
                                 <button class="btn btn-success btn-sm" data-toggle="modal"  data-target="#importExcel"><i class="fa fa-file-excel"></i>  Import Excel</button>
-                                <!-- Modal -->
+                                <!-- Modal Inport Excel-->
                                 <div class="modal fade" id="importExcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                     <div class="modal-content">
@@ -101,6 +150,7 @@
                                 {{-- memunculkan notfikasi kesalahan setiap baris --}}
                                 @if (session()->has('failures'))
                                     <div class="alert alert-danger mt-4" style="color:red;">
+                                        <b>Ada kesalahan saat memaasukkan data</b><br><br>
                                         <div class="row" style="border-bottom:solid 1px red">
                                             <div class="col-3"><strong>Baris</strong></div>
                                             <div class="col-3"><strong>Bagian</strong></div>
@@ -153,16 +203,57 @@
                                         <td>{{ $karyawan->bagian }}</td>
                                         <td>
                                             <form action="{{ route('karyawan.hapus', $karyawan->id) }}" method="post">
-
-                                            <a href="" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-tasks"></i> Edit
-                                            </a>
-                                            {{-- hapus data --}}
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" onClick="return confirm('Anda yakin ?')">
-                                                    <i class="fa fa-trash"></i> Hapus
-                                                </button>
+                                            <div style="width:150px">
+                                                <a href="" data-toggle="modal"  data-target="#edit{{ $karyawan->id }}" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-tasks"></i> Edit
+                                                </a>
+                                                {{-- hapus data --}}
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Anda yakin ?')">
+                                                        <i class="fa fa-trash"></i> Hapus
+                                                    </button>
+                                            </div>
                                             </form>
+                                            <div class="modal fade" id="edit{{ $karyawan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><b>Edit Data Karyawan</b></h5>
+                                                    </div>
+                                                    <form action="{{ route('karyawan.update', $karyawan->id) }}" method="post">
+                                                        {{ csrf_field() }}
+                                                    <div class="modal-body">
+
+                                                            <div class="form-group">
+                                                                <label for="smallInput">Nama</label>
+                                                                <input type="text" name="nama" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->name }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="smallInput">Email</label>
+                                                                <input type="text" name="email" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->email }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="smallInput">Telp</label>
+                                                                <input type="text" name="telp" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->telp }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="smallInput">Divisi</label>
+                                                                <input type="text" name="divisi" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->divisi }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="smallInput">Bagian</label>
+                                                                <input type="text" name="bagian" class="form-control form-control-sm" id="smallInput" value="{{ $karyawan->bagian }}">
+                                                            </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary btn-sm">Update Data</button>
+                                                    </div>
+                                                </form>
+                                                </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
