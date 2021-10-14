@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class UserController extends Controller
+class UserController extends Controller 
 {
     public function __construct()
     {

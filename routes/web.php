@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GajiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +38,12 @@ Route::middleware(['admin'])->group(function(){
     Route::post('/karyawan/update/{id}',    [UserController::class, 'perbaharui'])->name('karyawan.update');
     Route::post('/karyawan/add',            [UserController::class, 'add'])->name('karyawan.add');
 
+    // rekap-gaji
+    Route::get('/admin/kelola-gaji',        [GajiController::class, 'index']);        
+
     // import excel
-    Route::post('karyawan/import_excel', [UserController::class, 'import_excel']);
+    Route::post('karyawan/import_excel',    [UserController::class, 'import_excel']);
+    Route::post('gaji/import_excel',        [GajiController::class, 'import_excel']);
 
 
     // mengelompokan admin
