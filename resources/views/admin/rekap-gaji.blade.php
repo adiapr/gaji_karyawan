@@ -41,40 +41,50 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="smallInput">Email</label>
-                                                        <input type="text" required name="email" class="form-control form-control-sm" id="smallInput" placeholder="ex. nama@mangrovecorp.id">
+                                                        <label for="smallInput">Gaji Pokok</label>
+                                                        <input type="number" required name="gp" class="form-control form-control-sm" id="smallInput" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="smallInput">Password</label>
-                                                        <input type="text" required name="password" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan password">
+                                                        <label for="smallInput">Bonus</label>
+                                                        <input type="number" name="bonus" class="form-control form-control-sm" id="smallInput">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="smallInput">Telp</label>
-                                                        <input type="number" required name="telp" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan telephone/whatsapp">
+                                                        <label for="smallInput">Tunjangan</label>
+                                                        <input type="number" name="tunjangan" class="form-control form-control-sm" id="smallInput">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="smallInput">Divisi</label>
-                                                        <select name="divisi" required class="form-control form-control-sm" id="smallInput">
-                                                            <option value="">-- Pilih Divisi --</option>
-                                                            <option value="Makenliving">MakenLiving</option>
-                                                            <option value="Jagoancoding">Jagoancoding</option>
-                                                            <option value="Kaos Mangrove">Kaos Mangrove</option>
-                                                            <option value="Mangrove Inspiration">Mangrove Inspiration</option>
-                                                            <option value="Mangrove Gejayan">Mangrove Gejayan</option>
-                                                        </select>
-                                                        {{-- <input type="text" name="nama" class="form-control form-control-sm" id="smallInput"> --}}
+                                                        <label for="smallInput">Potongan Hadir</label>
+                                                        <input type="number" name="pot_hadir" class="form-control form-control-sm" id="smallInput">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="smallInput">Bagian</label>
-                                                        <input type="text" required name="bagian" class="form-control form-control-sm" id="smallInput">
+                                                        <label for="smallInput">Potongan Telat</label>
+                                                        <input type="number" name="pot_telat" class="form-control form-control-sm" id="smallInput">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Penyesuaian</label>
+                                                        <input type="number" name="penyesuaian" class="form-control form-control-sm" id="smallInput">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Tanggal Merah</label>
+                                                        <input type="number" name="tgl_merah" class="form-control form-control-sm" id="smallInput">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Produktivitas</label>
+                                                        <input type="number" name="produktivitas" class="form-control form-control-sm" id="smallInput">
                                                     </div>
                                                 </div>
                                             </div>
