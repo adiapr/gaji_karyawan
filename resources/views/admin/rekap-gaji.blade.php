@@ -26,8 +26,8 @@
                                     <div class="modal-dialog modal-lg">
 
                                     <div class="modal-content">
-                                        {{-- <form action="{{ route('karyawan.add') }}" method="post">
-                                            {{ csrf_field() }} --}}
+                                        <form action="{{ route('gaji.add') }}" method="post">
+                                            {{ csrf_field() }}
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Data</b></h5>
                                         </div>
@@ -37,6 +37,12 @@
                                                     <div class="form-group">
                                                         <label for="smallInput">Nama</label>
                                                         <input type="text" required name="nama" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan data karyawan">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <label for="smallInput">Email</label>
+                                                        <input type="email" required name="email" class="form-control form-control-sm" id="smallInput" placeholder="nama@server.com">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">

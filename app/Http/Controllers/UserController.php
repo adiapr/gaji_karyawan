@@ -33,7 +33,7 @@ class UserController extends Controller
         return view('admin.karyawan', compact('judul','data_karyawan'));
     }
 
-    // add
+    // add 
     public function add(Request $request){
         $karyawan = new User;
 

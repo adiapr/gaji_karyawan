@@ -40,6 +40,7 @@ Route::middleware(['admin'])->group(function(){
 
     // rekap-gaji
     Route::get('/admin/kelola-gaji',        [GajiController::class, 'index']);
+    Route::post('/gaji/add',                [GajiController::class, 'add'])->name('gaji.add');
     Route::post('/gaji/hapus/{id}',         [GajiController::class, 'delete'])->name('gaji.hapus');
 
     // import excel
