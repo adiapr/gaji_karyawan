@@ -36,13 +36,13 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="smallInput">Nama</label>
-                                                        <input type="text" required name="nama" class="form-control form-control-sm" id="smallInput" placeholder="Masukkan data karyawan">
+                                                        <input type="text" required name="nama" id='nama' class="form-control form-control-sm" id="smallInput" placeholder="Masukkan data karyawan">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="form-group">
                                                         <label for="smallInput">Email</label>
-                                                        <input type="email" required name="email" class="form-control form-control-sm" id="smallInput" placeholder="nama@server.com">
+                                                        <input type="email" required name="email" id='email' class="form-control form-control-sm" id="smallInput" placeholder="nama@server.com">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -69,7 +69,7 @@
                                                         <input type="number" name="pot_hadir" class="form-control form-control-sm" id="smallInput">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-8">
                                                     <div class="form-group">
                                                         <label for="smallInput">Potongan Telat</label>
                                                         <input type="number" name="pot_telat" class="form-control form-control-sm" id="smallInput">
@@ -153,6 +153,14 @@
                                 </div>
                                 @endif
 
+                                {{-- notifikasi gagal, data sama --}}
+                                @if ($success = Session::get('gagal'))
+                                <div class="alert alert-danger mt-4">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong style="color:red">{{ $success }}</strong>
+                                </div>
+                                @endif
+
                                 {{-- notifikasi jika error data excel --}}
                                 @if (isset($errors) && $errors->any())
                                     @foreach ($errors->all() as $error)
@@ -200,16 +208,16 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Periode</th>
-                                        <th>Gaji Pokok</th>
+                                        {{-- <th>Gaji Pokok</th>
                                         <th>Tunjangan</th>
                                         <th>Bonus</th>
                                         <th>Potongan Hadir</th>
                                         <th>Potongan Telat</th>
                                         <th>Penyesuaian</th>
                                         <th>Tanggal Merah</th>
-                                        <th>Produktivitas</th>
+                                        <th>Produktivitas</th> --}}
                                         <th>Total Gaji</th>
-                                        <th>Opsi</th>
+                                        {{-- <th>Opsi</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -219,72 +227,110 @@
                                     @foreach ($gaji as $gajii)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $gajii->nama_karyawan }}</td>
+                                        <td>
+                                            <a href="" data-toggle="modal"  data-target="#editkaryawan{{ $gajii->id }}"><b>{{ $gajii->nama_karyawan }}</b></a>
+                                            <div class="modal fade" id="editkaryawan{{ $gajii->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><b>Edit Data Karyawan</b></h5>
+                                                    </div>
+                                                    <form action="{{ route('gaji.update', $gajii->id) }}" method="post">
+                                                        {{ csrf_field() }}
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Nama</label>
+                                                                    <input type="text" required name="nama" id='nama' class="form-control form-control-sm" id="smallInput" value="{{ $gajii->nama_karyawan }}" placeholder="Masukkan data karyawan">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Email</label>
+                                                                    <input type="email" required name="email" id='email' class="form-control form-control-sm" id="smallInput" value="{{ $gajii->email }}" placeholder="nama@server.com">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Gaji Pokok</label>
+                                                                    <input type="number" required name="gp" class="form-control form-control-sm" id="smallInput" placeholder="" value="{{ $gajii->gp }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Bonus</label>
+                                                                    <input type="number" name="bonus" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->bonus }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Tunjangan</label>
+                                                                    <input type="number" name="tunjangan" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->tunjangan }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Potongan Hadir</label>
+                                                                    <input type="number" name="pot_hadir" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->pot_hadir }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Potongan Telat</label>
+                                                                    <input type="number" name="pot_telat" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->pot_telat }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Penyesuaian</label>
+                                                                    <input type="number" name="penyesuaian" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->penyesuaian }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Tanggal Merah</label>
+                                                                    <input type="number" name="tgl_merah" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->tgl_merah }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="smallInput">Produktivitas</label>
+                                                                    <input type="number" name="produktivitas" class="form-control form-control-sm" id="smallInput" value="{{ $gajii->produktivitas }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-sm btn-pull-left" data-dismiss="modal">Close</button>
+                                                        <form action="{{ route('gaji.hapus', $gajii->id) }}" method="post">
+                                                                {{-- hapus data --}}
+                                                                    @csrf
+                                                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Anda yakin ?')">
+                                                                        <i class="fa fa-trash"></i> Hapus
+                                                                    </button>
+                                                            
+                                                            </form>
+                                                    
+                                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-tasks"></i> Update Data</button>
+                                                    </div>
+                                                </form>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>{{ $gajii->email }}</td>
                                         <td>{{ $gajii->tanggal }}</td>
-                                        <td>{{ number_format($gajii->gp,0,',','.') }}</td>
+                                        {{-- <td>{{ number_format($gajii->gp,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->tunjangan,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->bonus,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->pot_hadir,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->pot_telat,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->penyesuaian,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->tgl_merah,0,',','.') }}</td>
-                                        <td>{{ number_format($gajii->produktivitas,0,',','.') }}</td>
+                                        <td>{{ number_format($gajii->produktivitas,0,',','.') }}</td> --}}
                                         <td>{{ number_format($gajii->total_gaji,0,',','.') }}</td>
-                                        <td>
-                                            <form action="{{ route('gaji.hapus', $gajii->id) }}" method="post">
-                                            <div style="width:150px">
-                                                <a href="" data-toggle="modal"  data-target="#edit" class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-tasks"></i> Edit
-                                                </a>
-                                                {{-- hapus data --}}
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm" onClick="return confirm('Anda yakin ?')">
-                                                        <i class="fa fa-trash"></i> Hapus
-                                                    </button>
-                                            </div>
-                                            </form>
-                                            <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel"><b>Edit Data Karyawan</b></h5>
-                                                    </div>
-                                                    {{-- <form action="{{ route('karyawan.update', $karyawan->id) }}" method="post">
-                                                        {{ csrf_field() }} --}}
-                                                    <div class="modal-body">
-
-                                                            <div class="form-group">
-                                                                <label for="smallInput">Nama</label>
-                                                                <input type="text" name="nama" class="form-control form-control-sm" id="smallInput" value="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="smallInput">Email</label>
-                                                                <input type="text" name="email" class="form-control form-control-sm" id="smallInput" value="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="smallInput">Telp</label>
-                                                                <input type="text" name="telp" class="form-control form-control-sm" id="smallInput" value="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="smallInput">Divisi</label>
-                                                                <input type="text" name="divisi" class="form-control form-control-sm" id="smallInput" value="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="smallInput">Bagian</label>
-                                                                <input type="text" name="bagian" class="form-control form-control-sm" id="smallInput" value="">
-                                                            </div>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary btn-sm">Update Data</button>
-                                                    </div>
-                                                {{-- </form> --}}
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        {{-- <td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -294,6 +340,4 @@
                 </div>
             </div>
         </div>
-
-
 @endsection

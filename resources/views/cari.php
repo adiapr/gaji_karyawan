@@ -30,7 +30,7 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Puskesmas') }}</label>
                     <div class="col-md-6">
                         <input type="text" id='puskesmas' class="form-control">
-                    </div>
+                    </div> 
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Kecamatan') }}</label>

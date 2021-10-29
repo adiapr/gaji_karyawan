@@ -42,6 +42,7 @@ Route::middleware(['admin'])->group(function(){
     Route::get('/admin/kelola-gaji',        [GajiController::class, 'index']);
     Route::post('/gaji/add',                [GajiController::class, 'add'])->name('gaji.add');
     Route::post('/gaji/hapus/{id}',         [GajiController::class, 'delete'])->name('gaji.hapus');
+    Route::post('/gaji/update/{id}',        [GajiController::class, 'update'])->name('gaji.update');
 
     // import excel
     Route::post('karyawan/import_excel',    [UserController::class, 'import_excel']);
@@ -49,6 +50,9 @@ Route::middleware(['admin'])->group(function(){
 
     // export excel
     Route::get('/user/export',              [UserController::class, 'export']);
+
+    // autofill $ complete
+    Route::post('/admin/kelola-gaji',       [GajiController::class, 'autocomplete'])->name('nama');
 
 
     // mengelompokan admin

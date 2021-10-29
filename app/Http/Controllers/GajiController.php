@@ -35,19 +35,39 @@ class GajiController extends Controller
         return redirect('/admin/kelola-gaji');
     }
 
+    // update
+    public function update(Request $request, $id){
+        $gaji = Gaji::find($id);
+        $gaji->nama_karyawan    = $request->nama;
+        $gaji->email            = $request->email;
+        $gaji->bonus            = $request->bonus;
+        // $gaji->tanggal          = date('Y-m-d');
+        $gaji->tunjangan        = $request->tunjangan;
+        $gaji->pot_hadir        = $request->pot_hadir;
+        $gaji->pot_telat        = $request->pot_telat;
+        $gaji->penyesuaian      = $request->penyesuaian;
+        $gaji->tgl_merah        = $request->tgl_merah;
+        $gaji->produktivitas    = $request->produktivitas;
+        $gaji->total_gaji       = ($request->gp)+($request->bonus)+($request->tunjangan)-($request->pot_hadir)-($request->pot_telat)-($request->penyesuaian)-($request->tgl_merah)-($request->produktivitas);
+
+        $gaji->update();
+        toast('Data Berhasil Diperbarui', 'success');
+        return redirect('/admin/kelola-gaji');
+    }
+
     // tambah
     public function add(Request $request){
         $gaji = new Gaji;
 
+        // validasi agar periode tidak sama
         $find = Gaji::where([
-            'nama_karyawan' => $request->nama,
-            'email'         => $request->email,
-            'tanggal'       => $request->tanggal
+            ['nama_karyawan',   '=', $request->nama],
+            ['email',           '=', $request->email],
+            ['tanggal',         '=', date('Y-m-d')]
         ])->first();
 
         if($find){
-            toast('Data gagal ditambahkan','danger');
-            return redirect('/admin/kelola-gaji');
+            return redirect('/admin/kelola-gaji')->with('gagal','Maaf! Data gaji gagal ditambahkan (data sudah ada), mohon cek kembali');
         }
 
         $gaji->nama_karyawan= $request->nama;
@@ -73,8 +93,23 @@ class GajiController extends Controller
     // autocomplete
     public function autocomplete(Request $request){
         $search = $request->cari;
-        $data_gaji = DB::table('users')
-                        ->join('name')
+
+        $search = !empty($request->cari) ? ($request->cari) : ('');
+        if($search){
+            $datagaji = Gaji::where('nama_karyawan', 'like', '%' .$search. '%');
+        }
+
+        $data = $datagaji->limit(5)->get();
+
+        $response = array();
+        foreach($data as $nama){
+            $response[] = array(
+                "value" => $nama->id,
+                "label" => $nama->nama_karyawan,
+                "email" => $nama->email
+            );
+        }
+        return response()->json($response);
     }
 
     // import excel
