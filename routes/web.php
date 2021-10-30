@@ -78,3 +78,8 @@ Route::middleware(['admin'])->group(function(){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// membuat search 
+Route::get('/search',       [GajiController::class, 'search']);
+Route::get('/autocomplete', [GajiController::class, 'autocomplete'])->name('autocomplete');

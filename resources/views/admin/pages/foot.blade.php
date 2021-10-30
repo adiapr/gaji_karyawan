@@ -40,13 +40,14 @@
 	<script src="../assets/js/setting-demo.js"></script>
 	<script src="../assets/js/demo.js"></script>
 	<script>
+		@foreach($data_karyawan1 as $datakaryawan)
 		Circles.create({
-			id:'circles-1',
-			radius:45,
-			value:60,
-			maxValue:100,
+			id:'circles-{{ $datakaryawan->id }}',
+			radius:70,
+			value:{{ $datakaryawan->total }},
+			maxValue:700,
 			width:7,
-			text: 5,
+			text: {{ $datakaryawan->total }},
 			colors:['#f1f1f1', '#FF9E27'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -54,11 +55,12 @@
 			styleWrapper:true,
 			styleText:true
 		})
+		@endforeach
 
 		Circles.create({
 			id:'circles-2',
-			radius:45,
-			value:70,
+			radius:100,
+			value:36,
 			maxValue:100,
 			width:7,
 			text: 36,
@@ -70,20 +72,35 @@
 			styleText:true
 		})
 
-		Circles.create({
-			id:'circles-3',
-			radius:45,
-			value:40,
-			maxValue:100,
-			width:7,
-			text: 12,
-			colors:['#f1f1f1', '#F25961'],
-			duration:400,
-			wrpClass:'circles-wrp',
-			textClass:'circles-text',
-			styleWrapper:true,
-			styleText:true
-		})
+		// Circles.create({
+		// 	id:'circles-4',
+		// 	radius:100,
+		// 	value:36,
+		// 	maxValue:100,
+		// 	width:7,
+		// 	text: 36,
+		// 	colors:['#f1f1f1', '#2BB930'],
+		// 	duration:400,
+		// 	wrpClass:'circles-wrp',
+		// 	textClass:'circles-text',
+		// 	styleWrapper:true,
+		// 	styleText:true
+		// })
+
+		// Circles.create({
+		// 	id:'circles-3',
+		// 	radius:45,
+		// 	value:40,
+		// 	maxValue:100,
+		// 	width:7,
+		// 	text: 12,
+		// 	colors:['#f1f1f1', '#F25961'],
+		// 	duration:400,
+		// 	wrpClass:'circles-wrp',
+		// 	textClass:'circles-text',
+		// 	styleWrapper:true,
+		// 	styleText:true
+		// })
 
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
 

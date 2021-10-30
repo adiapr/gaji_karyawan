@@ -36,7 +36,9 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="smallInput">Nama</label>
-                                                        <input type="text" required name="nama" id='nama' class="form-control form-control-sm" id="smallInput" placeholder="Masukkan data karyawan">
+                                                        {{-- <form action="" method="post"> --}}
+                                                            <input type="text" required name="nama" class="form-control form-control-sm typeahead" id="smallInput" placeholder="Masukkan data karyawan">
+                                                        {{-- </form> --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
@@ -329,7 +331,7 @@
                                         <td>{{ number_format($gajii->penyesuaian,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->tgl_merah,0,',','.') }}</td>
                                         <td>{{ number_format($gajii->produktivitas,0,',','.') }}</td> --}}
-                                        <td>{{ number_format($gajii->total_gaji,0,',','.') }}</td>
+                                        <td>Rp.{{ number_format($gajii->total_gaji,0,',','.') }},-</td>
                                         {{-- <td> --}}
                                     </tr>
                                     @endforeach
@@ -340,4 +342,5 @@
                 </div>
             </div>
         </div>
+        
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use App\Imports\GajiImport;
 use App\Models\Gaji;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
@@ -66,8 +67,16 @@ class GajiController extends Controller
             ['tanggal',         '=', date('Y-m-d')]
         ])->first();
 
+         $carinama = User::where([
+             ['name',       '=', $request->nama]
+         ])->get();
+
         if($find){
             return redirect('/admin/kelola-gaji')->with('gagal','Maaf! Data gaji gagal ditambahkan (data sudah ada), mohon cek kembali');
+        }
+
+        if(!$carinama){
+            return redirect('/admin/kelola-gaji')->with('gagal','Maaf! Data gaji gagal karena nama, mohon cek kembali');
         }
 
         $gaji->nama_karyawan= $request->nama;
@@ -88,28 +97,6 @@ class GajiController extends Controller
         toast('Data berhasil ditambahkan','success');
         return redirect('/admin/kelola-gaji');
 
-    }
-
-    // autocomplete
-    public function autocomplete(Request $request){
-        $search = $request->cari;
-
-        $search = !empty($request->cari) ? ($request->cari) : ('');
-        if($search){
-            $datagaji = Gaji::where('nama_karyawan', 'like', '%' .$search. '%');
-        }
-
-        $data = $datagaji->limit(5)->get();
-
-        $response = array();
-        foreach($data as $nama){
-            $response[] = array(
-                "value" => $nama->id,
-                "label" => $nama->nama_karyawan,
-                "email" => $nama->email
-            );
-        }
-        return response()->json($response);
     }
 
     // import excel
@@ -142,6 +129,21 @@ class GajiController extends Controller
 
         // kembalikan
         return redirect('/admin/kelola-gaji')->with('sukses','Selamat! Data gaji berhasil diimport');
+    }
+
+
+    // coba membuat search 
+    public function search(){
+        return view('search');
+    }
+
+    // autocomplete 
+    public function autocomplete(Request $request){
+        $datas = User::select("name")
+                        ->where("name","LIKE","%{$request->name}%")
+                        ->get();
+        
+    return response()->json($datas);
     }
 
 }

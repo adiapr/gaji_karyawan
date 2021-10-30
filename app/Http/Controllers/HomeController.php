@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,7 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $user   = auth::user();
+        $data_karyawan1 = User::groupBy('divisi')
+                            ->select('divisi', \DB::raw('count(*) as total'))
+                            ->get();
+        return view('admin.index', compact('data_karyawan1'));
     }
 
     public function tables(){
